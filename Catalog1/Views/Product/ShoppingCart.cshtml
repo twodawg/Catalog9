@@ -1,0 +1,33 @@
+﻿@model Catalog1.Models.Cart
+
+@{
+    ViewBag.Title = "ShoppingCart";
+}
+
+<h2>ShoppingCart</h2>
+
+<table class="table">
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.Carts.First().Name)</th>
+        <th>@Html.DisplayNameFor(model => model.Carts.First().Price)</th>
+        <th>@Html.DisplayNameFor(model => model.Carts.First().Quantity)</th>
+        <th>@Html.DisplayNameFor(model => model.Carts.First().SubTotal)</th>
+    </tr>
+
+    @foreach( Catalog1.Models.CartItem cartItem in Model.Carts )
+    {
+        
+        <tr>
+            <td>@cartItem.Name</td>
+            <td>$@cartItem.Price</td>
+            <td>@cartItem.Quantity</td>
+            <td>@cartItem.SubTotal</td>
+        </tr>
+    }
+</table>
+<p>
+    Total Price:
+    $@Model.PriceTotal
+</p>
+@Html.ActionLink("Edit Shopping Cart", "Index", "CartItems", null,
+    new { @class = "btn btn-default" })

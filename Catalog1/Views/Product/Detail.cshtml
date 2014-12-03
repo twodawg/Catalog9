@@ -1,0 +1,107 @@
+﻿@model Catalog1.Models.Product
+
+@{
+    ViewBag.Title = "Product details";
+}
+    <!-- Page Content -->
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-md-3">
+                <p class="lead">Shop Name</p>
+                <div class="list-group">
+                    <a href="#" class="list-group-item active">Category 1</a>
+                    <a href="#" class="list-group-item">Category 2</a>
+                    <a href="#" class="list-group-item">Category 3</a>
+                </div>
+            </div>
+
+            <div class="col-md-9">
+
+                <div class="thumbnail">
+                    <img class="img-responsive" src="@Html.DisplayFor(model => model.ImageLarge)" alt="">
+                    <div class="caption-full">
+                        <h4 class="pull-right">$@Html.DisplayFor(model => model.Price)</h4>
+                        <h4><a href="#">@Html.DisplayFor(model => model.Name)</a>
+                        </h4>
+                        <p>@Html.DisplayFor(model => model.Description)</p>
+                    </div>
+                    <div class="ratings">
+                        <p class="pull-right">@Html.DisplayFor(model => model.Quantity) in stock</p>
+                        <p>
+                            @Html.Partial("DisplayStarRating")
+                            @Model.AverageReview stars
+                        </p>
+                    </div>
+                    @using (Html.BeginForm("ShoppingCart", "Product"))
+                    {
+                        <h4>Qty:</h4>
+                        @Html.HiddenFor(model => model.ProductID, new { id = "productID" })
+                        @Html.TextBox("amount", 1)
+                        <input type="submit" value="Add to Cart" class="btn btn-default"/>
+                    }
+                    @Html.ActionLink("Modify", "Edit", new { id = Model.ProductID },
+                             new { @class = "btn btn-default" })
+                </div>
+
+                <div class="well">
+
+                    <div class="text-right">
+                        @*<a class="btn btn-success">Leave a Review</a>*@
+                        @Html.ActionLink("Leave a Review", "Create", 
+                             "ProductReviews",
+                             new { id = Model.ProductID },
+                             new { @class = "btn btn-success" })
+                    </div>
+
+                    <hr>
+
+                    @foreach(Catalog1.Models.ProductReview review
+                        in Model.Reviews)
+                    {
+                        <div class="row">
+                            <div class="col-md-12">
+                                @for (int star = 0; star < 5; star++)
+                                {
+                                    if (star < review.Rating.Value)
+                                    {
+                                        <span class="glyphicon glyphicon-star"></span>
+                                    }
+                                    else
+                                    {
+                                        <span class="glyphicon glyphicon-star-empty"></span>
+                                    }
+                                }
+                                @Html.DisplayFor(r => review.Title)
+                                <span class="pull-right">@Html.DisplayFor(r => review.TimeStamp)</span>
+                                <p>@Html.DisplayFor(r => review.ReviewText)</p>
+                            </div>
+                        </div>
+                        <hr>
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <!-- /.container -->
+
+    <div class="container">
+
+        <hr>
+
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright &copy; Your Website 2014</p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    <!-- /.container -->

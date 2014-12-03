@@ -1,0 +1,13 @@
+﻿@model Catalog1.Models.Product
+
+@for (int star = 0; star < 5; star++)
+{
+    if (star < Model.AverageReview)
+    {
+        <span class="glyphicon glyphicon-star"></span>
+    }
+    else
+    {
+        <span class="glyphicon glyphicon-star-empty"></span>
+    }
+}

@@ -1,0 +1,15 @@
+﻿@model List<string>
+
+@{
+    ViewBag.Title = "Contents";
+}
+
+<h2>Contents</h2>
+
+@foreach(string item in Model)
+{
+    <p>
+        @Html.ActionLink(item, "Index", item)
+    </p>
+}
+
